@@ -1,0 +1,138 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="ClinicModelStoreContainer" CdmEntityContainer="ClinicEntities1">
+    <EntitySetMapping Name="Appoitments">
+      <EntityTypeMapping TypeName="ClinicModel.Appoitment">
+        <MappingFragment StoreEntitySet="Appoitments">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Day" ColumnName="Day" />
+          <ScalarProperty Name="S_time" ColumnName="S_time" />
+          <ScalarProperty Name="E_time" ColumnName="E_time" />
+          <ScalarProperty Name="petaint_id" ColumnName="petaint_id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Chech_Up">
+      <EntityTypeMapping TypeName="ClinicModel.Chech_Up">
+        <MappingFragment StoreEntitySet="Chech_Up">
+          <ScalarProperty Name="Ex_FContent" ColumnName="Ex_FContent" />
+          <ScalarProperty Name="Ex_FExtention" ColumnName="Ex_FExtention" />
+          <ScalarProperty Name="Examination_FName" ColumnName="Examination_FName" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="type" ColumnName="type" />
+          <ScalarProperty Name="Result" ColumnName="Result" />
+          <ScalarProperty Name="diagnosis" ColumnName="diagnosis" />
+          <ScalarProperty Name="petiant_Id" ColumnName="petiant_Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Doctors">
+      <EntityTypeMapping TypeName="ClinicModel.Doctor">
+        <MappingFragment StoreEntitySet="Doctors">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="F_name" ColumnName="F_name" />
+          <ScalarProperty Name="L_name" ColumnName="L_name" />
+          <ScalarProperty Name="Username" ColumnName="Username" />
+          <ScalarProperty Name="pass" ColumnName="pass" />
+          <ScalarProperty Name="address" ColumnName="address" />
+          <ScalarProperty Name="phone" ColumnName="phone" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Medications">
+      <EntityTypeMapping TypeName="ClinicModel.Medication">
+        <MappingFragment StoreEntitySet="Medications">
+          <ScalarProperty Name="Ex_Fcontent" ColumnName="Ex_Fcontent" />
+          <ScalarProperty Name="Ex_extention" ColumnName="Ex_extention" />
+          <ScalarProperty Name="Examination_Fname" ColumnName="Examination_Fname" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="dose" ColumnName="dose" />
+          <ScalarProperty Name="period" ColumnName="period" />
+          <ScalarProperty Name="description" ColumnName="description" />
+          <ScalarProperty Name="petiant_id" ColumnName="petiant_id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Petients">
+      <EntityTypeMapping TypeName="ClinicModel.Petient">
+        <MappingFragment StoreEntitySet="Petients">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="F_name" ColumnName="F_name" />
+          <ScalarProperty Name="L_name" ColumnName="L_name" />
+          <ScalarProperty Name="age" ColumnName="age" />
+          <ScalarProperty Name="sex" ColumnName="sex" />
+          <ScalarProperty Name="Doc_id" ColumnName="Doc_id" />
+          <ScalarProperty Name="phone" ColumnName="phone" />
+          <ScalarProperty Name="email" ColumnName="email" />
+          <ScalarProperty Name="Date" ColumnName="Date" />
+          <ScalarProperty Name="active" ColumnName="active" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Reports">
+      <EntityTypeMapping TypeName="ClinicModel.Report">
+        <MappingFragment StoreEntitySet="Reports">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="petiant_Id" ColumnName="petiant_Id" />
+          <ScalarProperty Name="Detailes" ColumnName="Detailes" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="sysdiagrams">
+      <EntityTypeMapping TypeName="ClinicModel.sysdiagram">
+        <MappingFragment StoreEntitySet="sysdiagrams">
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+          <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+          <ScalarProperty Name="version" ColumnName="version" />
+          <ScalarProperty Name="definition" ColumnName="definition" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="sp_alterdiagram" FunctionName="ClinicModel.Store.sp_alterdiagram" />
+    <FunctionImportMapping FunctionImportName="sp_creatediagram" FunctionName="ClinicModel.Store.sp_creatediagram" />
+    <FunctionImportMapping FunctionImportName="sp_dropdiagram" FunctionName="ClinicModel.Store.sp_dropdiagram" />
+    <FunctionImportMapping FunctionImportName="sp_helpdiagramdefinition" FunctionName="ClinicModel.Store.sp_helpdiagramdefinition">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="ClinicModel.sp_helpdiagramdefinition_Result">
+          <ScalarProperty Name="version" ColumnName="version" />
+          <ScalarProperty Name="definition" ColumnName="definition" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="sp_helpdiagrams" FunctionName="ClinicModel.Store.sp_helpdiagrams">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="ClinicModel.sp_helpdiagrams_Result">
+          <ScalarProperty Name="Database" ColumnName="Database" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Owner" ColumnName="Owner" />
+          <ScalarProperty Name="OwnerID" ColumnName="OwnerID" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="sp_renamediagram" FunctionName="ClinicModel.Store.sp_renamediagram" />
+    <FunctionImportMapping FunctionImportName="sp_upgraddiagrams" FunctionName="ClinicModel.Store.sp_upgraddiagrams" />
+    <FunctionImportMapping FunctionImportName="DisplayFile" FunctionName="ClinicModel.Store.DisplayFile">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="ClinicModel.DisplayFile_Result">
+          <ScalarProperty Name="Examination_FName" ColumnName="Examination_FName" />
+          <ScalarProperty Name="Ex_FExtention" ColumnName="Ex_FExtention" />
+          <ScalarProperty Name="Ex_FContent" ColumnName="Ex_FContent" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="DisplayMedition" FunctionName="ClinicModel.Store.DisplayMedition">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="ClinicModel.DisplayMedition_Result">
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Dose" ColumnName="Dose" />
+          <ScalarProperty Name="Period" ColumnName="Period" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="InsertFile" FunctionName="ClinicModel.Store.InsertFile" />
+  </EntityContainerMapping>
+</Mapping>

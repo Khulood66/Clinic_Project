@@ -1,0 +1,247 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="ClinicModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Appoitment">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Day" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="S_time" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="E_time" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="petaint_id" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Petient" Relationship="Self.FK_Appoitments_Petients" FromRole="Appoitments" ToRole="Petients" />
+  </EntityType>
+  <EntityType Name="Chech_Up">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="type" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Result" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="diagnosis" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="petiant_Id" Type="Int32" />
+    <NavigationProperty Name="Petient" Relationship="Self.FK_Chech_Up_Petients" FromRole="Chech_Up" ToRole="Petients" />
+    <Property Name="Examination_FName" Type="String" MaxLength="25" FixedLength="false" Unicode="true" />
+    <Property Name="Ex_FExtention" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+    <Property Name="Ex_FContent" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="Doctor">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" />
+    <Property Name="F_name" Type="String" MaxLength="15" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="L_name" Type="String" MaxLength="15" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Username" Type="String" MaxLength="7" FixedLength="false" Unicode="true" />
+    <Property Name="pass" Type="String" MaxLength="25" FixedLength="false" Unicode="true" />
+    <Property Name="address" Type="String" MaxLength="25" FixedLength="false" Unicode="true" />
+    <Property Name="phone" Type="String" MaxLength="15" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="Petients" Relationship="Self.FK_Petients_Doctors" FromRole="Doctors" ToRole="Petients" />
+  </EntityType>
+  <EntityType Name="Medication">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="dose" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+    <Property Name="period" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="description" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="petiant_id" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Petient" Relationship="Self.FK_Medications_Petients" FromRole="Medications" ToRole="Petients" />
+    <Property Name="Examination_Fname" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Ex_extention" Type="String" MaxLength="6" FixedLength="false" Unicode="true" />
+    <Property Name="Ex_Fcontent" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="Petient">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="F_name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="L_name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="age" Type="Int32" Nullable="false" />
+    <Property Name="sex" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Doc_id" Type="Int32" Nullable="false" />
+    <Property Name="phone" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="email" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Date" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="active" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="Appoitments" Relationship="Self.FK_Appoitments_Petients" FromRole="Petients" ToRole="Appoitments" />
+    <NavigationProperty Name="Chech_Up" Relationship="Self.FK_Chech_Up_Petients" FromRole="Petients" ToRole="Chech_Up" />
+    <NavigationProperty Name="Doctor" Relationship="Self.FK_Petients_Doctors" FromRole="Petients" ToRole="Doctors" />
+    <NavigationProperty Name="Medications" Relationship="Self.FK_Medications_Petients" FromRole="Petients" ToRole="Medications" />
+    <NavigationProperty Name="Reports" Relationship="Self.FK_Reports_Petients" FromRole="Petients" ToRole="Reports" />
+  </EntityType>
+  <EntityType Name="Report">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="petiant_Id" Type="Int32" Nullable="false" />
+    <Property Name="Detailes" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="Petient" Relationship="Self.FK_Reports_Petients" FromRole="Reports" ToRole="Petients" />
+  </EntityType>
+  <EntityType Name="sysdiagram">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+  <Association Name="FK_Appoitments_Petients">
+    <End Role="Petients" Type="Self.Petient" Multiplicity="1" />
+    <End Role="Appoitments" Type="Self.Appoitment" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Petients">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Appoitments">
+        <PropertyRef Name="petaint_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Chech_Up_Petients">
+    <End Role="Petients" Type="Self.Petient" Multiplicity="0..1" />
+    <End Role="Chech_Up" Type="Self.Chech_Up" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Petients">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Chech_Up">
+        <PropertyRef Name="petiant_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Petients_Doctors">
+    <End Role="Doctors" Type="Self.Doctor" Multiplicity="1" />
+    <End Role="Petients" Type="Self.Petient" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Doctors">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Petients">
+        <PropertyRef Name="Doc_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Medications_Petients">
+    <End Role="Petients" Type="Self.Petient" Multiplicity="1" />
+    <End Role="Medications" Type="Self.Medication" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Petients">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Medications">
+        <PropertyRef Name="petiant_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Reports_Petients">
+    <End Role="Petients" Type="Self.Petient" Multiplicity="1" />
+    <End Role="Reports" Type="Self.Report" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Petients">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Reports">
+        <PropertyRef Name="petiant_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="ClinicEntities1" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Appoitments" EntityType="Self.Appoitment" />
+    <EntitySet Name="Chech_Up" EntityType="Self.Chech_Up" />
+    <EntitySet Name="Doctors" EntityType="Self.Doctor" />
+    <EntitySet Name="Medications" EntityType="Self.Medication" />
+    <EntitySet Name="Petients" EntityType="Self.Petient" />
+    <EntitySet Name="Reports" EntityType="Self.Report" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
+    <AssociationSet Name="FK_Appoitments_Petients" Association="Self.FK_Appoitments_Petients">
+      <End Role="Petients" EntitySet="Petients" />
+      <End Role="Appoitments" EntitySet="Appoitments" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Chech_Up_Petients" Association="Self.FK_Chech_Up_Petients">
+      <End Role="Petients" EntitySet="Petients" />
+      <End Role="Chech_Up" EntitySet="Chech_Up" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Petients_Doctors" Association="Self.FK_Petients_Doctors">
+      <End Role="Doctors" EntitySet="Doctors" />
+      <End Role="Petients" EntitySet="Petients" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Medications_Petients" Association="Self.FK_Medications_Petients">
+      <End Role="Petients" EntitySet="Petients" />
+      <End Role="Medications" EntitySet="Medications" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Reports_Petients" Association="Self.FK_Reports_Petients">
+      <End Role="Petients" EntitySet="Petients" />
+      <End Role="Reports" EntitySet="Reports" />
+    </AssociationSet>
+    <FunctionImport Name="sp_alterdiagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+      <Parameter Name="version" Mode="In" Type="Int32" />
+      <Parameter Name="definition" Mode="In" Type="Binary" />
+    </FunctionImport>
+    <FunctionImport Name="sp_creatediagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+      <Parameter Name="version" Mode="In" Type="Int32" />
+      <Parameter Name="definition" Mode="In" Type="Binary" />
+    </FunctionImport>
+    <FunctionImport Name="sp_dropdiagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_helpdiagramdefinition" ReturnType="Collection(ClinicModel.sp_helpdiagramdefinition_Result)">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_helpdiagrams" ReturnType="Collection(ClinicModel.sp_helpdiagrams_Result)">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_renamediagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+      <Parameter Name="new_diagramname" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="sp_upgraddiagrams" />
+    <FunctionImport Name="DisplayFile" ReturnType="Collection(ClinicModel.DisplayFile_Result)">
+      <Parameter Name="Petiant_Id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="DisplayMedition" ReturnType="Collection(ClinicModel.DisplayMedition_Result)">
+      <Parameter Name="Petiant_Id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="InsertFile">
+      <Parameter Name="FileName" Mode="In" Type="String" />
+      <Parameter Name="FileExtention" Mode="In" Type="String" />
+      <Parameter Name="FileContent" Mode="In" Type="String" />
+    </FunctionImport>
+  </EntityContainer>
+  <ComplexType Name="sp_helpdiagramdefinition_Result">
+    <Property Type="Int32" Name="version" Nullable="true" />
+    <Property Type="Binary" Name="definition" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="sp_helpdiagrams_Result">
+    <Property Type="String" Name="Database" Nullable="true" MaxLength="128" />
+    <Property Type="String" Name="Name" Nullable="false" MaxLength="128" />
+    <Property Type="Int32" Name="ID" Nullable="false" />
+    <Property Type="String" Name="Owner" Nullable="true" MaxLength="128" />
+    <Property Type="Int32" Name="OwnerID" Nullable="false" />
+  </ComplexType>
+  <ComplexType Name="DisplayFile_Result">
+    <Property Type="String" Name="Examination_FName" Nullable="true" MaxLength="25" />
+    <Property Type="String" Name="Ex_FExtention" Nullable="true" MaxLength="15" />
+    <Property Type="Binary" Name="Ex_FContent" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="DisplayMedition_Result">
+    <Property Type="String" Name="Name" Nullable="false" MaxLength="15" />
+    <Property Type="Decimal" Name="Dose" Nullable="true" Precision="19" Scale="2" />
+    <Property Type="String" Name="Period" Nullable="false" MaxLength="25" />
+    <Property Type="String" Name="Description" Nullable="true" MaxLength="50" />
+  </ComplexType>
+</Schema>

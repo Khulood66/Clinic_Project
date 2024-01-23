@@ -1,0 +1,641 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="ClinicModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Appoitments">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Day" Type="date" Nullable="false" />
+          <Property Name="S_time" Type="datetime" Nullable="false" />
+          <Property Name="E_time" Type="datetime" Nullable="false" />
+          <Property Name="petaint_id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Chech_Up">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="type" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Result" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="diagnosis" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="petiant_Id" Type="int" />
+          <Property Name="Examination_FName" Type="nvarchar" MaxLength="25" />
+          <Property Name="Ex_FExtention" Type="nvarchar" MaxLength="15" />
+          <Property Name="Ex_FContent" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="Doctors">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="F_name" Type="nvarchar" MaxLength="15" Nullable="false" />
+          <Property Name="L_name" Type="nvarchar" MaxLength="15" Nullable="false" />
+          <Property Name="Username" Type="nvarchar" MaxLength="7" />
+          <Property Name="pass" Type="nvarchar" MaxLength="25" />
+          <Property Name="address" Type="nvarchar" MaxLength="25" />
+          <Property Name="phone" Type="nvarchar" MaxLength="15" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Medications">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="dose" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="period" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="description" Type="nvarchar" MaxLength="50" />
+          <Property Name="Examination_Fname" Type="nvarchar" MaxLength="50" />
+          <Property Name="Ex_extention" Type="nvarchar" MaxLength="6" />
+          <Property Name="Ex_Fcontent" Type="nvarchar(max)" />
+          <Property Name="petiant_id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Petients">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="F_name" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="L_name" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="age" Type="int" Nullable="false" />
+          <Property Name="sex" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Doc_id" Type="int" Nullable="false" />
+          <Property Name="phone" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="email" Type="nvarchar(max)" />
+          <Property Name="Date" Type="date" Nullable="false" />
+          <Property Name="active" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Reports">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="petiant_Id" Type="int" Nullable="false" />
+          <Property Name="Detailes" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <Association Name="FK_Appoitments_Petients">
+          <End Role="Petients" Type="Self.Petients" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Appoitments" Type="Self.Appoitments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Petients">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Appoitments">
+              <PropertyRef Name="petaint_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Chech_Up_Petients">
+          <End Role="Petients" Type="Self.Petients" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Chech_Up" Type="Self.Chech_Up" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Petients">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Chech_Up">
+              <PropertyRef Name="petiant_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Medications_Petients">
+          <End Role="Petients" Type="Self.Petients" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Medications" Type="Self.Medications" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Petients">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Medications">
+              <PropertyRef Name="petiant_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Petients_Doctors">
+          <End Role="Doctors" Type="Self.Doctors" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Petients" Type="Self.Petients" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Doctors">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Petients">
+              <PropertyRef Name="Doc_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Reports_Petients">
+          <End Role="Petients" Type="Self.Petients" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Reports" Type="Self.Reports" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Petients">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Reports">
+              <PropertyRef Name="petiant_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="DisplayFile" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Petiant_Id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="DisplayMedition" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Petiant_Id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="fn_diagramobjects" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int" />
+        <Function Name="InsertFile" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="FileName" Type="nvarchar" Mode="In" />
+          <Parameter Name="FileExtention" Type="nvarchar" Mode="In" />
+          <Parameter Name="FileContent" Type="nvarchar(max)" Mode="In" />
+        </Function>
+        <Function Name="sp_alterdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+          <Parameter Name="version" Type="int" Mode="In" />
+          <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
+        </Function>
+        <Function Name="sp_creatediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+          <Parameter Name="version" Type="int" Mode="In" />
+          <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
+        </Function>
+        <Function Name="sp_dropdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_helpdiagramdefinition" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_helpdiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_renamediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+          <Parameter Name="new_diagramname" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="sp_upgraddiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <EntityContainer Name="ClinicModelStoreContainer">
+          <EntitySet Name="Appoitments" EntityType="Self.Appoitments" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Chech_Up" EntityType="Self.Chech_Up" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Doctors" EntityType="Self.Doctors" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Medications" EntityType="Self.Medications" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Petients" EntityType="Self.Petients" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Reports" EntityType="Self.Reports" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Appoitments_Petients" Association="Self.FK_Appoitments_Petients">
+            <End Role="Petients" EntitySet="Petients" />
+            <End Role="Appoitments" EntitySet="Appoitments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Chech_Up_Petients" Association="Self.FK_Chech_Up_Petients">
+            <End Role="Petients" EntitySet="Petients" />
+            <End Role="Chech_Up" EntitySet="Chech_Up" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Medications_Petients" Association="Self.FK_Medications_Petients">
+            <End Role="Petients" EntitySet="Petients" />
+            <End Role="Medications" EntitySet="Medications" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Petients_Doctors" Association="Self.FK_Petients_Doctors">
+            <End Role="Doctors" EntitySet="Doctors" />
+            <End Role="Petients" EntitySet="Petients" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Reports_Petients" Association="Self.FK_Reports_Petients">
+            <End Role="Petients" EntitySet="Petients" />
+            <End Role="Reports" EntitySet="Reports" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="ClinicModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Appoitment">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Day" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="S_time" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="E_time" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="petaint_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Petient" Relationship="Self.FK_Appoitments_Petients" FromRole="Appoitments" ToRole="Petients" />
+        </EntityType>
+        <EntityType Name="Chech_Up">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="type" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Result" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="diagnosis" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="petiant_Id" Type="Int32" />
+          <NavigationProperty Name="Petient" Relationship="Self.FK_Chech_Up_Petients" FromRole="Chech_Up" ToRole="Petients" />
+          <Property Name="Examination_FName" Type="String" MaxLength="25" FixedLength="false" Unicode="true" />
+          <Property Name="Ex_FExtention" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="Ex_FContent" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Doctor">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="F_name" Type="String" MaxLength="15" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="L_name" Type="String" MaxLength="15" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Username" Type="String" MaxLength="7" FixedLength="false" Unicode="true" />
+          <Property Name="pass" Type="String" MaxLength="25" FixedLength="false" Unicode="true" />
+          <Property Name="address" Type="String" MaxLength="25" FixedLength="false" Unicode="true" />
+          <Property Name="phone" Type="String" MaxLength="15" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Petients" Relationship="Self.FK_Petients_Doctors" FromRole="Doctors" ToRole="Petients" />
+        </EntityType>
+        <EntityType Name="Medication">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="dose" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="period" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="description" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="petiant_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Petient" Relationship="Self.FK_Medications_Petients" FromRole="Medications" ToRole="Petients" />
+          <Property Name="Examination_Fname" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Ex_extention" Type="String" MaxLength="6" FixedLength="false" Unicode="true" />
+          <Property Name="Ex_Fcontent" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Petient">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="F_name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="L_name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="age" Type="Int32" Nullable="false" />
+          <Property Name="sex" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Doc_id" Type="Int32" Nullable="false" />
+          <Property Name="phone" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="email" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Date" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="active" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Appoitments" Relationship="Self.FK_Appoitments_Petients" FromRole="Petients" ToRole="Appoitments" />
+          <NavigationProperty Name="Chech_Up" Relationship="Self.FK_Chech_Up_Petients" FromRole="Petients" ToRole="Chech_Up" />
+          <NavigationProperty Name="Doctor" Relationship="Self.FK_Petients_Doctors" FromRole="Petients" ToRole="Doctors" />
+          <NavigationProperty Name="Medications" Relationship="Self.FK_Medications_Petients" FromRole="Petients" ToRole="Medications" />
+          <NavigationProperty Name="Reports" Relationship="Self.FK_Reports_Petients" FromRole="Petients" ToRole="Reports" />
+        </EntityType>
+        <EntityType Name="Report">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="petiant_Id" Type="Int32" Nullable="false" />
+          <Property Name="Detailes" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Petient" Relationship="Self.FK_Reports_Petients" FromRole="Reports" ToRole="Petients" />
+        </EntityType>
+        <EntityType Name="sysdiagram">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <Association Name="FK_Appoitments_Petients">
+          <End Role="Petients" Type="Self.Petient" Multiplicity="1" />
+          <End Role="Appoitments" Type="Self.Appoitment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Petients">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Appoitments">
+              <PropertyRef Name="petaint_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Chech_Up_Petients">
+          <End Role="Petients" Type="Self.Petient" Multiplicity="0..1" />
+          <End Role="Chech_Up" Type="Self.Chech_Up" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Petients">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Chech_Up">
+              <PropertyRef Name="petiant_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Petients_Doctors">
+          <End Role="Doctors" Type="Self.Doctor" Multiplicity="1" />
+          <End Role="Petients" Type="Self.Petient" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Doctors">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Petients">
+              <PropertyRef Name="Doc_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Medications_Petients">
+          <End Role="Petients" Type="Self.Petient" Multiplicity="1" />
+          <End Role="Medications" Type="Self.Medication" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Petients">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Medications">
+              <PropertyRef Name="petiant_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Reports_Petients">
+          <End Role="Petients" Type="Self.Petient" Multiplicity="1" />
+          <End Role="Reports" Type="Self.Report" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Petients">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Reports">
+              <PropertyRef Name="petiant_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ClinicEntities1" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Appoitments" EntityType="Self.Appoitment" />
+          <EntitySet Name="Chech_Up" EntityType="Self.Chech_Up" />
+          <EntitySet Name="Doctors" EntityType="Self.Doctor" />
+          <EntitySet Name="Medications" EntityType="Self.Medication" />
+          <EntitySet Name="Petients" EntityType="Self.Petient" />
+          <EntitySet Name="Reports" EntityType="Self.Report" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
+          <AssociationSet Name="FK_Appoitments_Petients" Association="Self.FK_Appoitments_Petients">
+            <End Role="Petients" EntitySet="Petients" />
+            <End Role="Appoitments" EntitySet="Appoitments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Chech_Up_Petients" Association="Self.FK_Chech_Up_Petients">
+            <End Role="Petients" EntitySet="Petients" />
+            <End Role="Chech_Up" EntitySet="Chech_Up" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Petients_Doctors" Association="Self.FK_Petients_Doctors">
+            <End Role="Doctors" EntitySet="Doctors" />
+            <End Role="Petients" EntitySet="Petients" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Medications_Petients" Association="Self.FK_Medications_Petients">
+            <End Role="Petients" EntitySet="Petients" />
+            <End Role="Medications" EntitySet="Medications" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Reports_Petients" Association="Self.FK_Reports_Petients">
+            <End Role="Petients" EntitySet="Petients" />
+            <End Role="Reports" EntitySet="Reports" />
+          </AssociationSet>
+          <FunctionImport Name="sp_alterdiagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+            <Parameter Name="version" Mode="In" Type="Int32" />
+            <Parameter Name="definition" Mode="In" Type="Binary" />
+          </FunctionImport>
+          <FunctionImport Name="sp_creatediagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+            <Parameter Name="version" Mode="In" Type="Int32" />
+            <Parameter Name="definition" Mode="In" Type="Binary" />
+          </FunctionImport>
+          <FunctionImport Name="sp_dropdiagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_helpdiagramdefinition" ReturnType="Collection(ClinicModel.sp_helpdiagramdefinition_Result)">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_helpdiagrams" ReturnType="Collection(ClinicModel.sp_helpdiagrams_Result)">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_renamediagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+            <Parameter Name="new_diagramname" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_upgraddiagrams" />
+          <FunctionImport Name="DisplayFile" ReturnType="Collection(ClinicModel.DisplayFile_Result)">
+          <Parameter Name="Petiant_Id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="DisplayMedition" ReturnType="Collection(ClinicModel.DisplayMedition_Result)">
+          <Parameter Name="Petiant_Id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="InsertFile">
+            <Parameter Name="FileName" Mode="In" Type="String" />
+            <Parameter Name="FileExtention" Mode="In" Type="String" />
+            <Parameter Name="FileContent" Mode="In" Type="String" />
+          </FunctionImport>
+        </EntityContainer>
+        <ComplexType Name="sp_helpdiagramdefinition_Result">
+          <Property Type="Int32" Name="version" Nullable="true" />
+          <Property Type="Binary" Name="definition" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="sp_helpdiagrams_Result">
+          <Property Type="String" Name="Database" Nullable="true" MaxLength="128" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="128" />
+          <Property Type="Int32" Name="ID" Nullable="false" />
+          <Property Type="String" Name="Owner" Nullable="true" MaxLength="128" />
+          <Property Type="Int32" Name="OwnerID" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="DisplayFile_Result">
+          <Property Type="String" Name="Examination_FName" Nullable="true" MaxLength="25" />
+          <Property Type="String" Name="Ex_FExtention" Nullable="true" MaxLength="15" />
+          <Property Type="Binary" Name="Ex_FContent" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="DisplayMedition_Result">
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="15" />
+          <Property Type="Decimal" Name="Dose" Nullable="true" Precision="19" Scale="2" />
+          <Property Type="String" Name="Period" Nullable="false" MaxLength="25" />
+          <Property Type="String" Name="Description" Nullable="true" MaxLength="50" />
+        </ComplexType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="ClinicModelStoreContainer" CdmEntityContainer="ClinicEntities1">
+          <EntitySetMapping Name="Appoitments">
+            <EntityTypeMapping TypeName="ClinicModel.Appoitment">
+              <MappingFragment StoreEntitySet="Appoitments">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Day" ColumnName="Day" />
+                <ScalarProperty Name="S_time" ColumnName="S_time" />
+                <ScalarProperty Name="E_time" ColumnName="E_time" />
+                <ScalarProperty Name="petaint_id" ColumnName="petaint_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Chech_Up">
+            <EntityTypeMapping TypeName="ClinicModel.Chech_Up">
+              <MappingFragment StoreEntitySet="Chech_Up">
+                <ScalarProperty Name="Ex_FContent" ColumnName="Ex_FContent" />
+                <ScalarProperty Name="Ex_FExtention" ColumnName="Ex_FExtention" />
+                <ScalarProperty Name="Examination_FName" ColumnName="Examination_FName" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="type" ColumnName="type" />
+                <ScalarProperty Name="Result" ColumnName="Result" />
+                <ScalarProperty Name="diagnosis" ColumnName="diagnosis" />
+                <ScalarProperty Name="petiant_Id" ColumnName="petiant_Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Doctors">
+            <EntityTypeMapping TypeName="ClinicModel.Doctor">
+              <MappingFragment StoreEntitySet="Doctors">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="F_name" ColumnName="F_name" />
+                <ScalarProperty Name="L_name" ColumnName="L_name" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="pass" ColumnName="pass" />
+                <ScalarProperty Name="address" ColumnName="address" />
+                <ScalarProperty Name="phone" ColumnName="phone" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Medications">
+            <EntityTypeMapping TypeName="ClinicModel.Medication">
+              <MappingFragment StoreEntitySet="Medications">
+                <ScalarProperty Name="Ex_Fcontent" ColumnName="Ex_Fcontent" />
+                <ScalarProperty Name="Ex_extention" ColumnName="Ex_extention" />
+                <ScalarProperty Name="Examination_Fname" ColumnName="Examination_Fname" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="dose" ColumnName="dose" />
+                <ScalarProperty Name="period" ColumnName="period" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="petiant_id" ColumnName="petiant_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Petients">
+            <EntityTypeMapping TypeName="ClinicModel.Petient">
+              <MappingFragment StoreEntitySet="Petients">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="F_name" ColumnName="F_name" />
+                <ScalarProperty Name="L_name" ColumnName="L_name" />
+                <ScalarProperty Name="age" ColumnName="age" />
+                <ScalarProperty Name="sex" ColumnName="sex" />
+                <ScalarProperty Name="Doc_id" ColumnName="Doc_id" />
+                <ScalarProperty Name="phone" ColumnName="phone" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="active" ColumnName="active" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Reports">
+            <EntityTypeMapping TypeName="ClinicModel.Report">
+              <MappingFragment StoreEntitySet="Reports">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="petiant_Id" ColumnName="petiant_Id" />
+                <ScalarProperty Name="Detailes" ColumnName="Detailes" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="ClinicModel.sysdiagram">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="sp_alterdiagram" FunctionName="ClinicModel.Store.sp_alterdiagram" />
+          <FunctionImportMapping FunctionImportName="sp_creatediagram" FunctionName="ClinicModel.Store.sp_creatediagram" />
+          <FunctionImportMapping FunctionImportName="sp_dropdiagram" FunctionName="ClinicModel.Store.sp_dropdiagram" />
+          <FunctionImportMapping FunctionImportName="sp_helpdiagramdefinition" FunctionName="ClinicModel.Store.sp_helpdiagramdefinition">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ClinicModel.sp_helpdiagramdefinition_Result">
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_helpdiagrams" FunctionName="ClinicModel.Store.sp_helpdiagrams">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ClinicModel.sp_helpdiagrams_Result">
+                <ScalarProperty Name="Database" ColumnName="Database" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Owner" ColumnName="Owner" />
+                <ScalarProperty Name="OwnerID" ColumnName="OwnerID" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_renamediagram" FunctionName="ClinicModel.Store.sp_renamediagram" />
+          <FunctionImportMapping FunctionImportName="sp_upgraddiagrams" FunctionName="ClinicModel.Store.sp_upgraddiagrams" />
+          <FunctionImportMapping FunctionImportName="DisplayFile" FunctionName="ClinicModel.Store.DisplayFile">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ClinicModel.DisplayFile_Result">
+                <ScalarProperty Name="Examination_FName" ColumnName="Examination_FName" />
+                <ScalarProperty Name="Ex_FExtention" ColumnName="Ex_FExtention" />
+                <ScalarProperty Name="Ex_FContent" ColumnName="Ex_FContent" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="DisplayMedition" FunctionName="ClinicModel.Store.DisplayMedition">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ClinicModel.DisplayMedition_Result">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Dose" ColumnName="Dose" />
+                <ScalarProperty Name="Period" ColumnName="Period" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="InsertFile" FunctionName="ClinicModel.Store.InsertFile" />
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
